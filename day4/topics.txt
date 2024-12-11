@@ -1,0 +1,6 @@
+1. How to read file content
+2. How to write into file
+3. How to update file content
+4. How to Rename a file
+5. How to delete a file
+6. How to create/ read/ delete a folder/Directoryadding extra
