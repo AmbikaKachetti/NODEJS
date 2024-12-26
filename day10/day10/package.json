@@ -1,0 +1,15 @@
+{
+  "name": "day10",
+  "version": "1.0.0",
+  "description": "- CORS - Cross Origin Resource Sharing\r     - like accessing realme phone data from amazon where as original data is from realme original website\r     - like withdrawing money using sbi card in baroda bank atm.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
