@@ -49,8 +49,23 @@ const ds = multer.diskStorage({
     },
 });
 
+const filter = (req, res, cb) =>{
+    const allowedTypes = [
+        "image/jpg", "/image/jpeg"
+    ]
+    if(allowedTypes.includes(file.mimetype)){
+        cb(null, true)
+    }
+    else{
+        cb(new Error("Invalid File Type"))
+    }
+}
+
 // Multer object with disk storage
-const upload = multer({ storage: ds });
+const upload = multer({ 
+    storage: ds,  
+    fileFilter: filter
+});
 
 app.get('/', (req, res) => {
     res.send('Hi');
