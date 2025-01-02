@@ -1,3 +1,4 @@
+## Video11 - DAY 11 - Multer - Part - 1
 # Multer File Upload - Multer Middleware
 1. npm init -y
 2. npm i express
@@ -64,4 +65,35 @@
 https://chatgpt.com/c/6773f330-4674-8008-8ae6-35864f55f54c
 
 using chat gpt i rectifile file not saving in desired folder in previously commented code
-# ----------------------------------------------------------------------------
+
+https://chatgpt.com/c/67765a12-5ec8-8008-8eb3-d7c7084262a1
+# -----------------------------------------------------------------------------
+# _____________________________________________________________________________
+
+## Video12 - DAY 12 - Multer - Part - 2
+
+# MULTER File Type
+
+# to know more about - Multer Error Handling
+ - https://www.npmjs.com/package/multer
+ - https://github.com/expressjs/multer // here goto "Error Handling"
+
+-------------------------------------------------------------------------------
+
+// Handle file upload
+app.post('/upload', (req, res) => {
+    upload(req, res, (err)=>{
+        if(err){
+            if(err instanceof multer.MulterError){
+                res.status(400)  // here if we are not setting 400, by default it will set 200
+            }
+        }
+        else{
+            res.send({
+                message: "uploaded successfully"
+            })
+        }
+    })  
+});
+
+--------------------------------------------------------------------------------
