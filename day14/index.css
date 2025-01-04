@@ -1,0 +1,48 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+.form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.center{
+    text-align: center;
+}
+.otp_input_fields{
+    margin: auto;
+    /* background-color: red; */
+    box-shadow: 0px 0 8px 0px #02024066;
+    max-width: 420px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    padding: 30px;
+    border-radius: 6px;
+}
+.center{
+    text-align: center;
+}
+.verification{
+    margin-top: 20px;
+}
+.otp_num{
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    text-align: center;
+    outline: none;
+    border: 1px solid green;
+    font-size: 14px;
+}
+.otp_num::-webkit-inner-spin-button,
+.otp_num::-webkit-outer-spin-button{
+    appearance: none;
+}
