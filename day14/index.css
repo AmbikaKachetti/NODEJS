@@ -32,6 +32,7 @@ body{
 }
 .verification{
     margin-top: 20px;
+    display: none;
 }
 .otp_num{
     width: 40px;
@@ -45,4 +46,8 @@ body{
 .otp_num::-webkit-inner-spin-button,
 .otp_num::-webkit-outer-spin-button{
     appearance: none;
+}
+.success, .error{
+    display: none;
+    text-align: center;
 }

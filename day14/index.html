@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
-    rel="stylesheet"
-    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
-    crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="./index.css">
 </head>
+
 <body>
     <div class="container m-4">
         <h3 class="text-primary center">OTP verification</h3>
@@ -21,9 +21,15 @@
                 <button class="btn btn-primary" onclick="sendOTP()">Send OTP</button>
             </div>
         </div>
+        <div class="success text-success">
+            OTP Verifies Successfully
+        </div>
+        <div class="error text-danger">
+            Invalid OTP
+        </div>
         <div class="verification">
             <div class="title center">
-                <p>An OTP has been send to ***abc@gmail.com</p>
+                <p>An OTP has been send to <span class="email_partial">***abc@gmail.com</span></p>
             </div>
             <div class="otp_input_fields">
                 <input type="number" class="otp_num otp_num_1">
@@ -32,19 +38,103 @@
                 <input type="number" class="otp_num otp_num_4">
             </div>
         </div>
-    </div> 
+    </div>
     <script>
         let emailEle = document.querySelector('.email');
+        let verificationEle = document.querySelector('.verification')
+        let successEle = document.querySelector('.success')
+        let errorEle = document.querySelector('.error')
+        let otp_inputs = document.querySelectorAll('.otp_num')
+        let emailPartialEle = document.querySelector('.email_partial')
         let regex = new RegExp('[a-zA-Z0-9]+@[a-z]+\.[a-z]{2,3}')
-        function sendOTP(){
-            let email = emailEle.value;
-            if(regex.test(email)){
+        let otp_check = ''
+        let email;
+
+        otp_inputs.forEach(
+            (ip) => {
+                ip.addEventListener('keyup', moveNext)
+            }
+        )
+        function moveNext(event) {
+            // otp_num_4
+            let current = event.target;
+            let index = current.classList[1].slice(-1)
+            if (event.keyCode === 8 && index > 1) {
+                current.previousElementSibling.focus()
+            }
+            else if (index < 4) {
+                current.nextElementSibling.focus()
 
             }
-            else{
-                alert("Enter Valid Email")
+            otp_check = '';
+            for (ip of otp_inputs) {
+                otp_check += ip.value
+            }
+            if (otp_check.length == 4) {
+                verifyOTP()
+            }
+        }
+        function verifyOTP() {
+            fetch('http://localhost:4000/verify', {
+                method: "POST",
+                body: JSON.stringify({
+                    "email": `${email}`,
+                    "otp": `${otp_check}`
+                }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+                .then(
+                    (res) => {
+                        if (res.status == 200) {
+                            verificationEle.style.display = 'none'
+                            successEle.style.display = 'block'
+                            errorEle.style.display = 'none'
+                        }
+                        else {
+                            errorEle.style.display = 'block'
+                            errorEle.innerHTML = "Invalid OTP"                                errorEle.style.display = 'block'
+                            successEle.style.display = 'none'
+                        }
+
+                    })
+
+
+        }
+
+        function sendOTP() {
+            email = emailEle.value;
+            if (regex.test(email)) {
+                fetch('http://localhost:4000/sendotp', {
+                    method: "POST",
+                    body: JSON.stringify({
+
+                        "email": `${email}`
+                    }),
+                    headers: { 'Content-Type': 'application/json' }
+                })
+                    .then(
+                        (res) => {
+                            if (res.status == 200) {
+                                verificationEle.style.display = 'block'
+                                emailPartialEle.value = "****" + email.slice(4)
+                                emailEle.value = '';
+                                // console.log(res);
+                            }
+                            else {
+                                errorEle.style.display = 'block'
+                                errorEle.innerHTML = "Email not Existed"
+                                successEle.style.display = 'none'
+                            }
+                        }
+                    )
+            }
+            else {
+                // alert("Enter Valid Email")
+                errorEle.style.display = 'block'
+                errorEle.innerHTML = "Invalid Email"
             }
         }
     </script>
 </body>
+
 </html>
