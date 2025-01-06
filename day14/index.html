@@ -92,15 +92,11 @@
                         }
                         else {
                             errorEle.style.display = 'block'
-                            errorEle.innerHTML = "Invalid OTP"                                errorEle.style.display = 'block'
+                            errorEle.innerHTML = "Invalid OTP"                              
                             successEle.style.display = 'none'
                         }
-
                     })
-
-
         }
-
         function sendOTP() {
             email = emailEle.value;
             if (regex.test(email)) {
